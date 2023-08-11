@@ -8,10 +8,13 @@ import MapKit
 import SwiftUI
 
 struct ContentView: View {
+    @State private var mapRegion = MKCoordinateRegion(center:
+    CLLocationCoordinate2D(latitude: 50, longitude: 0 ), span: MKCoordinateSpan(latitudeDelta: 25, longitudeDelta: 25))
     var body: some View {
-        VStack {
-    
-            Text("Hello, world!")
+        ZStack {
+            Map(coordinateRegion: $mapRegion)
+                .ignoresSafeArea()
+            
         }
         .padding()
     }
