@@ -13,10 +13,11 @@ struct ContentView: View {
     
     @State private var locations = [Location]()
     
+    @State private var selectedPlace: Location?
+    
     var body: some View {
         ZStack {
-            Map(coordinateRegion: $mapRegion, annotationItems: locations) { location in
-                MapAnnotation(coordinate: location.coordinate ) {
+            Map(coordinateRegion: $mapRegion, annotationItems: locations) { location in MapAnnotation(coordinate: location.coordinate ) {
                     VStack {
                         Image(systemName: "star.circle")
                             .resizable()
@@ -26,6 +27,9 @@ struct ContentView: View {
                             .clipShape(Circle())
                         
                         Text(location.name)
+                    }
+                    .onTapGesture {
+                        selectedPlace = location
                     }
                 }
             }
@@ -59,7 +63,9 @@ struct ContentView: View {
                 }
             }
         }
-        .ignoresSafeArea()
+        .sheet(item: $selectedPlace) { place in
+            Text(place.name)
+        }
     }
 }
 
